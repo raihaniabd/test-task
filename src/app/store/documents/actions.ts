@@ -87,3 +87,33 @@ export const removeImageFailure = createAction(
   '[Documents] Remove Image Failure',
   props<{ error: any }>()
 );
+
+export const updateDescriptionPosition = createAction(
+  '[Documents] Update Description Position',
+  props<{ id:string; page: number; descriptionIndex: number, x: number; y: number }>()
+);
+
+export const updateDescriptionPositionSuccess = createAction(
+  '[Documents] Update Description Position Success',
+  props<{ id:string; page: number; descriptionIndex: number, x: number; y: number }>()
+);
+
+export const updateDescriptionPositionFailure = createAction(
+  '[Documents] Update Description Position Failure',
+  props<{ error: any }>()
+);
+
+export const updateImagePosition = createAction(
+  '[Documents] Update Image Position',
+  props<{ id:string; page: number; imageIndex: number, x: number; y: number }>()
+);
+
+export const updateImagePositionSuccess = createAction(
+  '[Documents] Update Image Position Success',
+  props<{ id:string; page: number; imageIndex: number, x: number; y: number }>()
+);
+
+export const updateImagePositionFailure = createAction(
+  '[Documents] Update Image Position Failure',
+  props<{ error: any }>()
+);

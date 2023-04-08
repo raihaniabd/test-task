@@ -44,6 +44,7 @@
                                 [style.top]="description.y + 'px'"
                                 cdkDragBoundary=".page-document"
                                 cdkDrag
+                                (cdkDragReleased)="onDescriptionDragEnded($event, imageIndex, descriptionIndex)"
                             >
                                 <div class="pointer-events-auto flex items-center justify-between gap-x-6 bg-yellow-300 border-slate-700 px-3 py-1 rounded-xl">
                                     <p class="text-sm">{{ description.text }}</p>
@@ -74,6 +75,7 @@
                                 [style.top]="picture.y + 'px'"
                                 cdkDragBoundary=".page-document"
                                 cdkDrag
+                                (cdkDragReleased)="onImageDragEnded($event, imageIndex, pictureIndex)"
                             >
 
                                 <div class="pointer-events-auto flex items-center justify-between gap-x-6 bg-yellow-300 border-slate-700 px-3 py-1 rounded-xl">

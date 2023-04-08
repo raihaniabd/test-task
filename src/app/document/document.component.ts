@@ -4,6 +4,7 @@ import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { Store, select } from '@ngrx/store';
 
 import { AnnotationOverlayComponent } from '../annotation-overlay/annotation-overlay.component';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -111,6 +112,27 @@ export class DocumentComponent implements OnInit, AfterViewInit, OnDestroy {
       id: '1',
       page: pageIndex,
       imageIndex: index
+    }));
+  }
+
+  onDescriptionDragEnded(event: any, pageIndex: number, index: number) {
+    console.log(event);
+    this._store.dispatch(DocumentStoreActions.updateDescriptionPosition({
+      id: '1',
+      page: pageIndex,
+      descriptionIndex: index,
+      x: parseInt(event.source.element.nativeElement.style.left, 10),
+      y: parseInt(event.source.element.nativeElement.style.top, 10),
+    }));
+  }
+
+  onImageDragEnded(event: any, pageIndex: number, index: number) {
+    this._store.dispatch(DocumentStoreActions.updateImagePosition({
+      id: '1',
+      page: pageIndex,
+      imageIndex: index,
+      x: parseInt(event.source.element.nativeElement.style.left, 10),
+      y: parseInt(event.source.element.nativeElement.style.top, 10),
     }));
   }
 }

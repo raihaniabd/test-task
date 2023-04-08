@@ -55,6 +55,30 @@ const documentReducer = createReducer(
       })
     }
   }),
+  on(DocumentsActions.updateImagePositionSuccess, (state, { imageIndex, id, page, x, y }) => {
+    return {
+      ...state,
+      documents: state.documents.map((document: any) => {
+        if (document.id === id) {
+          document.pages[page].images[imageIndex].x = x;
+          document.pages[page].images[imageIndex].y = y;
+        }
+        return document;
+      })
+    }
+  }),
+  on(DocumentsActions.updateDescriptionPositionSuccess, (state, { descriptionIndex, id, page, x, y }) => {
+    return {
+      ...state,
+      documents: state.documents.map((document: any) => {
+        if (document.id === id) {
+          document.pages[page].descriptions[descriptionIndex].x = x;
+          document.pages[page].descriptions[descriptionIndex].y = y;
+        }
+        return document;
+      })
+    }
+  }),
 );
 
 export const reducer = (state: DocumentsState | undefined, action: Action): any => documentReducer(state, action);
