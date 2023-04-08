@@ -1,0 +1,58 @@
+<div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all">
+    <div *ngIf="annotation === ''">
+
+        <button
+            mat-icon-button
+            (click)="annotation = 'text'"
+        >
+            <mat-icon>text_fields</mat-icon>
+        </button>
+        <button
+            (click)="annotation = 'image'"
+            mat-icon-button
+        >
+            <mat-icon>image</mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="annotation === 'text'">
+        <mat-form-field class="w-full">
+            <mat-label>Text</mat-label>
+            <input
+                matInput
+                [(ngModel)]="descriptionText"
+                (keydown.enter)="addText()"
+            >
+        </mat-form-field>
+
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="addText()"
+        >
+            Ok
+        </button>
+    </div>
+
+    <div *ngIf="annotation === 'image'">
+        <input
+            type="file"
+            (change)="onFileSelected($event)"
+        >
+        <img
+            *ngIf="imageUrl"
+            [src]="imageUrl"
+            class="w-52 h-auto"
+            alt="Uploaded Image"
+        >
+
+        <button
+            mat-flat-button
+            class="mt-2"
+            color="primary"
+            (click)="addImage()"
+        >
+            Ok
+        </button>
+    </div>
+</div>

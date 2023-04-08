@@ -1,27 +1,27 @@
-# TestTask
+# Project Title
+This project aims to render documents including pages and possibility to add annotations to it like text, image etc...
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
+## Approach
+The project was developed using Angular 13. It uses Angular CDK for drag and drop. The annotation menu was implemented using angular overlay.
 
-## Development server
+## Pros and Cons
+## Pros
+Use of state management using NGRX
+Use of tailwind for css
+Uses drag-and-drop functionality with Angular's CDK library to allow users to move and adjust elements on the page.
+Has an intuitive system for adding and removing descriptions and images on the page, using both double-click and click events respectively.
+Follows a consistent code style with clean and readable code, using features like template syntax and reactive programming with RxJS.
+## Cons
+The code uses fixed values for certain styles, such as the width and height of images, which may not scale well to different sizes or aspect ratios.
+The use of multiple nested divs and styles may result in slower performance, especially for complex pages or on older browsers/devices.
+There is a potential lack of error handling or input validation in certain areas of the code, such as user input for descriptions and images.
+The code may require additional comments or documentation to explain some of the more complex or less intuitive features, especially for new developers or those unfamiliar with Angular.
+## Known Issues
+There are some known issues with this project, including:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ZoomIn and Out may affect scaling of nested elements
+The code right now use few component and will make it a bit hard to scale
+## Solutions
+To resolve these issues, the following solutions are proposed:
+Scale should be applied on all child for it to work correctly
+And the code needs to be split into multiple dumb components

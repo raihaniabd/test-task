@@ -1,0 +1,107 @@
+<div class="min-h-full">
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between"></div>
+        </div>
+    </nav>
+
+    <header class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <button mat-icon-button (click)="zoomIn()">
+                <mat-icon>zoom_in</mat-icon>
+            </button>
+            <button mat-icon-button (click)="zoomOut()">
+                <mat-icon>zoom_out</mat-icon>
+            </button>
+            <button mat-icon-button (click)="save()">
+                <mat-icon>save</mat-icon>
+            </button>
+        </div>
+    </header>
+    <main>
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-center w-full h-full" >
+                <div class="relative w-full h-full">
+                    <div
+                        class="flex flex-col w-full h-full items-center"
+                        #bookPagesRef
+                        style="height: 100%;"
+                    >
+                        <div
+                            (dblclick)="addDescription($event, imageIndex)"
+                            [style.transform]="'scale(' + currentZoom + ')'"
+                            *ngFor="let image of images; let imageIndex = index"
+                            [style.background-image]="'url(' + image.src + ')'"
+                            class="page-document relative bg-no-repeat bg-cover border border-gray-600 select-none"
+                            style="object-fit: cover; width: 50vw; height: 100vh;"
+                        >
+                            <div
+                                class="pointer-events-none fixed inset-x-0 bottom-0 sm:flex sm:justify-center sm:px-6 sm:pb-5 lg:px-8"
+                                *ngFor="let description of image.descriptions || [];  let descriptionIndex = index"
+                                [style.transform]="'scale(' + currentZoom + ')'"
+                                class="absolute"
+                                [style.left]="description.x + 'px'"
+                                [style.top]="description.y + 'px'"
+                                cdkDragBoundary=".page-document"
+                                cdkDrag
+                            >
+                                <div class="pointer-events-auto flex items-center justify-between gap-x-6 bg-yellow-300 border-slate-700 px-3 py-1 rounded-xl">
+                                    <p class="text-sm">{{ description.text }}</p>
+                                    <button
+                                        type="button"
+                                        class="-m-1.5 flex-none p-1.5"
+                                        (click)="removeDescription(imageIndex, descriptionIndex)"
+                                    >
+                                        <span class="sr-only">Dismiss</span>
+                                        <svg
+                                            class="h-5 w-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div
+                                class="pointer-events-none fixed inset-x-0 bottom-0 sm:flex sm:justify-center sm:px-6 sm:pb-5 lg:px-8"
+                                *ngFor="let picture of image.images || [];  let pictureIndex = index"
+                                [style.transform]="'scale(' + currentZoom + ')'"
+                                class="absolute"
+                                [style.left]="picture.x + 'px'"
+                                [style.top]="picture.y + 'px'"
+                                cdkDragBoundary=".page-document"
+                                cdkDrag
+                            >
+
+                                <div class="pointer-events-auto flex items-center justify-between gap-x-6 bg-yellow-300 border-slate-700 px-3 py-1 rounded-xl">
+                                    <img
+                                        [src]="picture.src"
+                                        class="w-50 h-auto rounded-xl"
+                                    >
+                                    <button
+                                        type="button"
+                                        class="-m-1.5 flex-none p-1.5"
+                                        (click)="removeImage(imageIndex, pictureIndex)"
+                                    >
+                                        <span class="sr-only">Dismiss</span>
+                                        <svg
+                                            class="h-5 w-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
