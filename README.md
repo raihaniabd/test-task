@@ -1,4 +1,4 @@
-# Project Title
+# Test Task
 This project aims to render documents including pages and possibility to add annotations to it like text, image etc...
 
 ## Approach
