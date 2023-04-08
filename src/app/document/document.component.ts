@@ -116,7 +116,6 @@ export class DocumentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDescriptionDragEnded(event: any, pageIndex: number, index: number) {
-    console.log(event);
     this._store.dispatch(DocumentStoreActions.updateDescriptionPosition({
       id: '1',
       page: pageIndex,
