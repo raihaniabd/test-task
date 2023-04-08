@@ -4,6 +4,35 @@ This project aims to render documents including pages and possibility to add ann
 ## Approach
 The project was developed using Angular 13. It uses Angular CDK for drag and drop. The annotation menu was implemented using angular overlay.
 
+## How to Run the Project
+To run this project on your local machine, follow these steps:
+
+1. Make sure you have Node.js and the Angular CLI installed on your system. You can install them by running the following commands in your terminal:
+
+```shell
+node --version
+```
+
+If Node.js is not installed, download it from the official website: https://nodejs.org/en/download/
+
+Then, install the Angular CLI globally by running the following command:
+
+```shell
+npm install -g @angular/cli
+```
+
+2. Clone the project repository from a Git hosting service like GitHub
+
+3. Open your terminal or command prompt, navigate to the project directory and install the project dependencies by running the following command:
+
+Once the dependencies are installed, start the Angular development server by running the following command:
+
+```shell
+ng serve
+```
+
+The server should now be running and the project should be accessible on your web browser at http://localhost:4200/documents/1.
+
 ## Pros and Cons
 ## Pros
 Use of state management using NGRX
