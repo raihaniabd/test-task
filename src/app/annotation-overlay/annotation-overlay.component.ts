@@ -29,7 +29,8 @@ export class AnnotationOverlayComponent {
       description: {
         x: this.x,
         y: this.y,
-        text: this.descriptionText
+        text: this.descriptionText,
+        isActive: false
       }
     }));
     this.overlayRef?.dispose();
@@ -55,7 +56,8 @@ export class AnnotationOverlayComponent {
       image: {
         x: this.x,
         y: this.y,
-        src: this.imageUrl
+        src: this.imageUrl,
+        isActive: false
       }
     }));
     this.overlayRef?.dispose();

@@ -4,7 +4,7 @@ import { DocumentComponent } from './document/document.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [{
-  path: 'documents/:id',
+  path: 'documents/:id/pages/:pageId',
   component: DocumentComponent,
 }];
 

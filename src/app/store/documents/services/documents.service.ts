@@ -51,4 +51,10 @@ export class DocumentService {
   public removeDescription(): Observable<any> {
     return of(true);
   }
+
+
+  // This can be replaced with a working API call
+  public updateImageMenu(): Observable<any> {
+    return of(true);
+  }
 }

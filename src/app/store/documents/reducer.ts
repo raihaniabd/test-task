@@ -79,6 +79,28 @@ const documentReducer = createReducer(
       })
     }
   }),
+  on(DocumentsActions.updateDescriptionMenuSuccess, (state, { descriptionIndex, id, page, isActive }) => {
+    return {
+      ...state,
+      documents: state.documents.map((document: any) => {
+        if (document.id === id) {
+          document.pages[page].descriptions[descriptionIndex].isActive = isActive;
+        }
+        return document;
+      })
+    }
+  }),
+  on(DocumentsActions.updateImageMenuSuccess, (state, { imageIndex, id, page, isActive }) => {
+    return {
+      ...state,
+      documents: state.documents.map((document: any) => {
+        if (document.id === id) {
+          document.pages[page].images[imageIndex].isActive = isActive;
+        }
+        return document;
+      })
+    }
+  }),
 );
 
 export const reducer = (state: DocumentsState | undefined, action: Action): any => documentReducer(state, action);

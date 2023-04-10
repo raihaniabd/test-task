@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DocumentStoreActions, DocumentStoreSelectors } from '../store/documents';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { Store, select } from '@ngrx/store';
@@ -23,9 +24,12 @@ export class DocumentComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('documentRef') documentRef!: ElementRef;
   private overlayRef: OverlayRef | null = null;
   documents$: Observable<any[]> | undefined;
+  dragging: boolean = false;
+
 
   currentZoom = 1.0;
-  constructor(public dialog: MatDialog, private overlay: Overlay, private _store: Store<RootStoreState.State>) { }
+  clickTime = Date.now();
+  constructor(public dialog: MatDialog, private overlay: Overlay, private _store: Store<RootStoreState.State>, private renderer: Renderer2, private route: ActivatedRoute, private router: Router) { }
 
   ngAfterViewInit(): void {
   }
@@ -44,6 +48,8 @@ export class DocumentComponent implements OnInit, AfterViewInit, OnDestroy {
     this.documents$.subscribe((documents) => {
       this.images = documents[0].pages;
     });
+
+
   }
 
   addDescription(event: MouseEvent, pageIndex: number): void {
@@ -133,6 +139,76 @@ export class DocumentComponent implements OnInit, AfterViewInit, OnDestroy {
       x: parseInt(event.source.element.nativeElement.style.left, 10),
       y: parseInt(event.source.element.nativeElement.style.top, 10),
     }));
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(event: any) {
+    this.images.forEach((image, index) => {
+      const imageElement = this.renderer.selectRootElement(`.document-page-${index}`, true);
+      const elementTop = imageElement.getBoundingClientRect().top;
+      const viewportBottom = window.innerHeight;
+
+      if (elementTop < viewportBottom) {
+        this.router.navigate(['documents/1/pages/' + (index + 1).toString()], {
+          replaceUrl: true
+        });
+      }
+    });
+  }
+
+  onGlobalClick(event: MouseEvent) {
+    this.images.forEach((page, pageIndex) => {
+      page.descriptions?.forEach((description, descriptionIndex) => {
+        this.onDescriptionShowMenu(event, pageIndex, descriptionIndex, false);
+      });
+      page.images?.forEach((image, imageIndex) => {
+        this.onImageShowMenu(event, pageIndex, imageIndex, false);
+      });
+    });
+  }
+
+  onImageShowMenu(event: any, pageIndex: number, index: number, isActive: boolean) {
+    this._store.dispatch(DocumentStoreActions.updateImageMenu({
+      id: '1',
+      page: pageIndex,
+      imageIndex: index,
+      isActive
+    }));
+
+  }
+
+  onDescriptionShowMenu(event: any, pageIndex: number, index: number, isActive: boolean) {
+    this._store.dispatch(DocumentStoreActions.updateDescriptionMenu({
+      id: '1',
+      page: pageIndex,
+      descriptionIndex: index,
+      isActive
+    }));
+  }
+
+  cdkDragStarted() {
+    this.dragging = true;
+  }
+
+  cdkDragEnded() {
+    this.dragging = false;
+  }
+
+  public onMouseDown(event: MouseEvent, pageIndex: number, index: number, isActive: boolean, type: string): void {
+    this.clickTime = Date.now();
+  }
+
+  public onMouseUp(event: MouseEvent, pageIndex: number, index: number, isActive: boolean, type: string): void {
+    const endTime = Date.now();
+    const timeDiff = endTime - this.clickTime;
+    console.log(timeDiff);
+    if (timeDiff < 80) {
+      if (type === 'description') {
+        this.onDescriptionShowMenu(event, pageIndex, index, isActive);
+      } else {
+        this.onImageShowMenu(event, pageIndex, index, isActive);
+      }
+    }
   }
 }
 
